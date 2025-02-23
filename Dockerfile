@@ -16,7 +16,9 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 
 # Expose port 8080 (Required for Google Cloud Run)
-EXPOSE 8080
+EXPOSE 8080  # FastAPI app
+EXPOSE 5000  # MLflow tracking UI
+
 
 # Start FastAPI using Uvicorn
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
