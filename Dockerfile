@@ -10,15 +10,17 @@ COPY . /app
 # Verify model files exist after COPY
 RUN ls -l /app  # Debugging step
 
+ENV CLOUD_RUN=true
+
 # Install dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir mlflow fastapi uvicorn numpy pydantic scikit-learn
 
 
 # Expose port 8080 (Required for Google Cloud Run)
-EXPOSE 8080  # FastAPI app
-EXPOSE 5000  # MLflow tracking UI
+EXPOSE 8080
+EXPOSE 5000
 
 
 # Start FastAPI using Uvicorn
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["python", "app.py"]
