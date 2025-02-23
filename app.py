@@ -23,9 +23,10 @@ except FileNotFoundError:
     raise RuntimeError(f"Model files not found at {model_path} or {scaler_path}")
 
 
-# Set up MLflow tracking
-mlflow.set_tracking_uri("http://localhost:5000")  # MLflow server URL
-mlflow.set_experiment("WiFi_Network_Monitoring")  # Your experiment name
+if os.getenv("CLOUD_RUN", "false") == "false":  # Default is False (local)
+    mlflow.set_tracking_uri("http://localhost:5000")
+    mlflow.set_experiment("WiFi_Network_Monitoring")
+
 
 class InputData(BaseModel):
     latency: float
